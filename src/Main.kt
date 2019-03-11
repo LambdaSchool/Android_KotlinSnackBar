@@ -1,3 +1,5 @@
+import java.util.*
+
 fun main(args: Array<String>){
     val jane = Customer(1, "Jane", 45.25)
     val bob = Customer(2, "Bob", 33.14)
@@ -13,26 +15,94 @@ fun main(args: Array<String>){
     val soda = Snack(1, "Soda", 24, 2.50, 2)
     val water = Snack(2, "Water", 20, 2.75, 2)
 
-    jane.buySnack(soda.buySnack(3))
-    println("${jane.name} buys 3 soda, remaining cash: ${jane.cashOnHand}, soda left: ${soda.getQuantity()}")
+    var input = 0
+    while (input != 3) {
+        input = showMenu()
+        when(input) {
+            1 -> {
+                println("What snack would you like to buy?")
+                println("1. Chips $${chips.cost}, ${chips.getQuantity()} left")
+                println("2. Chocolate Bar $${chocolate.cost}, ${chocolate.getQuantity()} left")
+                println("3. Pretzel $${pretzel.cost}, ${pretzel.getQuantity()} left")
+                val input = Scanner(System.`in`)
+                when(input.nextInt()){
+                    1 -> {
+                        println("You bought one bag of chips")
+                        bob.buySnack(chips.buySnack(1))
+                        println("You have $${bob.cashOnHand} left")
+                    }
+                    2 -> {
+                        println("You bought one chocolate bar")
+                        bob.buySnack(chocolate.buySnack(1))
+                        println("You have $${bob.cashOnHand} left")
+                    }
+                    3 -> {
+                        println("You bought one pretzel")
+                        bob.buySnack(pretzel.buySnack(1))
+                        println("You have $${bob.cashOnHand} left")
+                    }
+                }
+            }
+            2 -> {
+                println("What would you like to do?")
+                println("1. Add snack quantity")
+                val input = Scanner(System.`in`)
+                when(input.nextInt()){
+                    1 -> {
+                        println("What snack do you want to add more of?")
+                        println("1. Chips")
+                        println("2. Chocolate Bar")
+                        println("3. Pretzel $")
+                        val input = Scanner(System.`in`)
+                        when(input.nextInt()){
+                            1 -> {
+                                val intInput = Scanner(System.`in`)
+                                println("How much do you want to add?")
+                                if(intInput.nextInt() > 0){
+                                    chips.addQuantity(intInput.nextInt())
+                                    println("Added ${intInput.nextInt()} chips")
+                                }
+                            }
+                            2 -> {
+                                val intInput = Scanner(System.`in`)
+                                println("How much do you want to add?")
+                                if(intInput.nextInt() > 0){
+                                    chocolate.addQuantity(intInput.nextInt())
+                                    println("Added ${intInput.nextInt()} chocolate bars")
+                                }
+                            }
+                            3 -> {
+                                val intInput = Scanner(System.`in`)
+                                println("How much do you want to add?")
+                                if(intInput.nextInt() > 0){
+                                    pretzel.addQuantity(intInput.nextInt())
+                                    println("Added ${intInput.nextInt()} pretzels")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            3 -> {
 
-    jane.buySnack(pretzel.buySnack(1))
-    println("${jane.name} buys 1 pretzel, remaining cash: ${jane.cashOnHand}, pretzel left: ${pretzel.getQuantity()}")
+            }
+        }
+    }
+}
 
-    bob.buySnack(soda.buySnack(2))
-    println("${bob.name} buys 2 soda, remaining cash: ${bob.cashOnHand}, soda left: ${soda.getQuantity()}")
+fun showMenu(): Int {
+    var userInput = 0
+    val input = Scanner(System.`in`)
 
-    jane.cashOnHand += 10.0
-    println("Jane has ${jane.cashOnHand}")
+    println("Who are you?")
+    println("1. Customer")
+    println("2. Manager")
+    println("3.Quit")
+    println("Enter your choice:")
+    userInput = input.nextInt()
 
-    jane.buySnack(chocolate.buySnack(1))
-    println("${jane.name} buys 1 chocolate, remaining cash: ${jane.cashOnHand}, chocolate left: ${chocolate.getQuantity()}")
+    return userInput
 
-    pretzel.addQuantity(12)
-    println("Pretzel in stock: ${pretzel.getQuantity()}")
-
-    bob.buySnack(pretzel.buySnack(3))
-    println("${bob.name} buys 3 pretzel, remaining cash: ${bob.cashOnHand}, pretzel left: ${pretzel.getQuantity()}")
 }
 
 class Snack(val id: Int, var name: String, private var quantity: Int, var cost: Double, var vendingMachineId: Int){

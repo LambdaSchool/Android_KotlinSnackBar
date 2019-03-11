@@ -3,16 +3,16 @@ fun main(args: Array<String>){
 
 }
 
-class Snack(val id: Int, var name: String, var quantity: Int, var cost: Double, var vendingMachineId: Int){
+class Snack(val id: Int, var name: String, private var quantity: Int, var cost: Double, var vendingMachineId: Int){
 
     fun addQuantity(quantityToAdd: Int): Int{
         quantity += quantityToAdd
         return quantity
     }
 
-    fun buySnack(quantityToBuy: Int): Int{
+    fun buySnack(quantityToBuy: Int): Double{
         quantity -= quantityToBuy
-        return quantity
+        return getTotalCost(quantityToBuy)
     }
 
     fun getTotalCost(quantity: Int): Double{
@@ -22,4 +22,12 @@ class Snack(val id: Int, var name: String, var quantity: Int, var cost: Double, 
             0.0
         }
     }
+}
+
+class VendingMachine(val id: Int, var name: String)
+
+class Customer(val id: Int, var name: String, var cashOnHand: Double){
+     fun buySnack(totalCost: Double){
+         cashOnHand -= totalCost
+     }
 }

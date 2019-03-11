@@ -1,3 +1,5 @@
+import sun.jvm.hotspot.oops.CellTypeState.value
+
 fun main(args: Array<String>){
     val snack = Snack(1, "Cookie", 10, 2.0, 1)
 
@@ -27,7 +29,10 @@ class Snack(val id: Int, var name: String, private var quantity: Int, var cost: 
 class VendingMachine(val id: Int, var name: String)
 
 class Customer(val id: Int, var name: String, var cashOnHand: Double){
-     fun buySnack(totalCost: Double){
-         cashOnHand -= totalCost
-     }
+    var isBroke: Boolean = false
+        set(isBroke) { cashOnHand <= 0.0}
+
+    fun buySnack(totalCost: Double){
+        cashOnHand -= totalCost
+    }
 }

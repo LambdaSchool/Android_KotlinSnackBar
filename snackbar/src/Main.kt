@@ -21,6 +21,10 @@ fun main(args: Array<String>) {
     drink.addSnack(d1)
     drink.addSnack(d2)
 
+    drink.purchase(janeCustomer, d1, 3)
+
+
+
 
 }
 

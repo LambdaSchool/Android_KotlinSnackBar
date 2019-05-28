@@ -10,12 +10,14 @@ class Snack(val id: Int,
         field = value
     }
 
-    fun restockQuantity(amount: Int) {
+    fun restockQuantity(amount: Int): Int {
         quantity += amount
+        return quantity
     }
 
     fun buySnacks(amount: Int): Double {
         return if (amount <= quantity) {
+            quantity = quantity.minus(amount)
             amount.times(cost)
         } else {
             -1.0
